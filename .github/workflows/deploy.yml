@@ -16,16 +16,12 @@ jobs:
       - name: Deploy VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          # port: ${{ secrets.PORT }}
 
           script: |
-            cd /var/www/project
-
+            cd /var/www/yaksera_p
             git pull origin main
-
             docker compose down
-
             docker compose up -d --build
