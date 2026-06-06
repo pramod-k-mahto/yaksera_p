@@ -21,12 +21,36 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // ─── CORS ─────────────────────────────────────────────────────────
-app.use(cors("*"))
+import cors from "cors";
+
+const allowedOrigins = [
+  "http://187.127.177.252:3000",
+  "http://localhost:3000",
+  "https://yaksera.com",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // mobile apps / curl
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  }),
+);
 // ─── Rate Limiters ────────────────────────────────────────────────
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 20,
-  message: { success: false, message: "Too many requests, please try again later." },
+  message: {
+    success: false,
+    message: "Too many requests, please try again later.",
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
