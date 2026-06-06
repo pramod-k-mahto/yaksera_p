@@ -363,6 +363,7 @@ export default function Careers() {
                 <span className="text-xs uppercase tracking-[0.18em] font-semibold text-white/50">
                   We are hiring
                 </span>
+                
               </div>
               <h3 className="text-2xl font-bold text-white mb-3">
                 Send us your résumé
