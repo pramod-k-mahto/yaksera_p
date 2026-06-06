@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // ─── CORS ─────────────────────────────────────────────────────────
 import cors from "cors";
 
+
 const allowedOrigins = [
   "http://187.127.177.252:3000",
   "http://localhost:3000",
