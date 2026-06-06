@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getJobVacancies } from "../services/jobVacancy";
 import { useNavigate } from "react-router-dom";
+
 const tabs = ["All", "Engineering", "Design", "Internship", "Infrastructure"];
 function BulletItem({ text }) {
   return (
