@@ -371,7 +371,7 @@ export default function Careers() {
                 Tell us what you're passionate about and what kind of work
                 excites you.
               </p>
-              <h1  className="bg-red-500 hover:bg-red-600 active:scale-[0.99] p-3 rounded-2xl text-2xl" > contact@yaksera.com</h1>
+              <h1  className="bg-red-500 hover:bg-red-600 active:scale-[0.99] p-3 rounded-2xl text-md" > contact@yaksera.com</h1>
               {/* <button
                 onClick={() => {
                   navigate("/jobApplicationForm");
