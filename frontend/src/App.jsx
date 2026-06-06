@@ -3,10 +3,10 @@ import Footer from "./components/Footer";
 import AppRoutes from "./components/AppRoutes";
 import ComingSoon from "./pages/ComingSoon";
 function App() {
-  let isTrue = true;
+  let isComing = false;
   return (
     <div className="bg-white">
-      {isTrue ? (
+      {isComing ? (
         <ComingSoon />
       ) : (
         <>
