@@ -6,16 +6,13 @@ import { login } from "../services/users";
 import { useContext } from "react";
 import { UserContext } from "../context/UserProvider";
 import { useEffect } from "react";
-
-
-
+// Login
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   // const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { loading, user, setUser, setLoading } = useContext(UserContext);
-
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
