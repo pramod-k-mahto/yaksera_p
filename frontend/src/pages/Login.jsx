@@ -40,7 +40,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (!user) {
+    if (user) {
       return navigate("/");
     }
   }, [navigate]);

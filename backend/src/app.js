@@ -28,6 +28,7 @@ const allowedOrigins = [
   "http://187.127.177.252:3000",
   "http://localhost:3000",
   "https://yaksera.com",
+  "http://localhost:5173"
 ];
 
 app.use(
