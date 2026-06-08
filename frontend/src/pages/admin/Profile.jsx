@@ -6,19 +6,19 @@ function Profile() {
   const navigate = useNavigate();
   const { loading, setUser, user } = useContext(UserContext);
   // console.log(user);
- 
+
   const logoutUser = async () => {
     let data = await logout();
-    // console.log(data);
+    console.log(data);
     // console.log(data);
     if (data?.status == 200) {
+      setUser(null);
+      alert(data?.message);
       return navigate("/login"); // Redirect to admin dashboard after successful login
     }
-    setUser(null);
-    alert(data?.message);
   };
 
-   if (!user && loading) {
+  if (!user && loading) {
     return <div className="p-10">Loading profile...</div>;
   }
   return (

@@ -22,26 +22,28 @@ function Login() {
     try {
       setLoading(true);
       let data = await login(formData);
-      // console.log(data.data?.user);
-      alert(data?.message);
+      console.log(data.data?.user?.role);
+      // alert(data?.message);
       setUser(data?.data?.user);
-
-      if (data?.data?.user) {
+      if (data?.data?.user?.role == "admin") {
+        setLoading(false);
         return navigate("/admin"); // Redirect to admin dashboard after successful login
+      } else {
+        setLoading(false);
+        return navigate("/"); //
       }
-      setLoading(false);
     } catch (error) {
       console.log(error);
       setError(error);
       setLoading(false);
     }
   };
-
+  // console.log(user)// ← add `user` as a dependency
   useEffect(() => {
-    if (user) {
-      return navigate("/");
+    if (!loading && user) {
+      navigate(user.role === "admin" ? "/admin" : "/");
     }
-  }, [navigate]);
+  }, [user, loading, navigate]);
 
   return (
     <div className="min-h-screen bg-[#080c10] flex items-center justify-center p-4 relative overflow-hidden">

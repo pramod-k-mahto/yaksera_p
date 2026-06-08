@@ -42,16 +42,16 @@ app.use(
   }),
 );
 // ─── Rate Limiters ────────────────────────────────────────────────
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20,
-  message: {
-    success: false,
-    message: "Too many requests, please try again later.",
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 50,
+//   message: {
+//     success: false,
+//     message: "Too many requests, please try again later.",
+//   },
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
 
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -60,7 +60,7 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(generalLimiter);
+// app.use(generalLimiter);
 
 // ─── Routes ───────────────────────────────────────────────────────
 app.use("/api/v1/contacts", contactRouter);
@@ -70,7 +70,7 @@ app.use("/api/v1/job-vacancies", jobVacancyRouter);
 app.use("/api/v1/job-applications", jobApplicationsRouter);
 app.use("/api/v1/case-studies", caseStudyRouter);
 app.use("/api/v1/services", serviceRouter);
-app.use("/api/v1/users", authLimiter, userRouter);
+app.use("/api/v1/users", userRouter);
 app.use("/api/v1/testimonials", testimonialRouter);
 
 // ─── Health Check ─────────────────────────────────────────────────

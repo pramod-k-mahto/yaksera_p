@@ -1,8 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { scroller } from "react-scroll";
 import logo from "../assets/logo.png";
+import { UserContext } from "../context/UserProvider";
+import { logout } from "../services/users";
 
 const navItems = [
   { label: "Services", section: "services" },
@@ -17,6 +19,7 @@ function Header() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { loading, user, setUser, setLoading } = useContext(UserContext);
 
   useEffect(() => {
     setIsOpen(false);
@@ -40,6 +43,33 @@ function Header() {
       });
     }
   };
+
+  // const handleLogout = () => {
+  //   setUser(null);
+  //   // clear token if you store it
+  //   localStorage.removeItem("token");
+  //   navigate("/login");
+  // };
+
+  // const handleLogoutMobile = () => {
+  //   setUser(null);
+  //   localStorage.removeItem("token");
+  //   setIsOpen(false);
+  //   navigate("/login");
+  // };
+
+
+
+    const logoutUser = async () => {
+      let data = await logout();
+      console.log(data);
+      // console.log(data);
+      if (data?.status == 200) {
+        setUser(null);
+        alert(data?.message);
+        return navigate("/login"); // Redirect to admin dashboard after successful login
+      }
+    };
 
   return (
     <>
@@ -65,22 +95,40 @@ function Header() {
             ))}
           </nav>
 
-          {/* ✅ RIGHT SIDE — Login + Register + CTA */}
+          {/* RIGHT SIDE — Desktop */}
           <div className="hidden md:flex items-center gap-3">
-            <div className="h-[18px] w-px bg-white/20" />
-            <Link
-              to="/login"
-              className="text-[14px] font-medium text-white/80 hover:text-white transition"
-            >
-              Log in
-            </Link>
-            <Link
-              to="/register"
-              className="text-[14px] font-semibold text-white border border-white/30 rounded-full px-4 py-1.5 hover:bg-white/10 transition"
-            >
-              Register
-            </Link>
-            <div className="h-[18px] w-px bg-white/20" />
+            {!user ? (
+              <>
+                <div className="h-[18px] w-px bg-white/20" />
+                <Link
+                  to="/login"
+                  className="text-[14px] font-medium text-white/80 hover:text-white transition"
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-[14px] font-semibold text-white border border-white/30 rounded-full px-4 py-1.5 hover:bg-white/10 transition"
+                >
+                  Register
+                </Link>
+                <div className="h-[18px] w-px bg-white/20" />
+              </>
+            ) : (
+              <>
+                <div className="h-[18px] w-px bg-white/20" />
+                <span className="text-[14px] text-white/60">
+                  {user.name || user.email}
+                </span>
+                <button
+                  onClick={logoutUser}
+                  className="text-[14px] font-medium text-white/80 hover:text-white transition"
+                >
+                  Log out
+                </button>
+                <div className="h-[18px] w-px bg-white/20" />
+              </>
+            )}
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 rounded-full bg-[#e8132f] px-5 py-2.5 text-sm font-semibold text-white hover:scale-[1.02] transition"
@@ -138,22 +186,38 @@ function Header() {
                   </button>
                 ))}
 
-                {/* ✅ AUTH in mobile menu — below nav items, above CTA */}
+                {/* AUTH — Mobile */}
                 <div className="border-t border-white/10 pt-4 mt-1 flex flex-col gap-3">
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="text-white/70 hover:text-white"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="text-white/70 hover:text-white"
-                  >
-                    Register
-                  </Link>
+                  {!user ? (
+                    <>
+                      <Link
+                        to="/login"
+                        onClick={() => setIsOpen(false)}
+                        className="text-white/70 hover:text-white"
+                      >
+                        Log in
+                      </Link>
+                      <Link
+                        to="/register"
+                        onClick={() => setIsOpen(false)}
+                        className="text-white/70 hover:text-white"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-sm text-white/40">
+                        {user.name || user.email}
+                      </span>
+                      <button
+                        onClick={logoutUser}
+                        className="text-left text-white/70 hover:text-white"
+                      >
+                        Log out
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 

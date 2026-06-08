@@ -31,6 +31,8 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  console.log(user)
+
   return (
     <UserContext.Provider value={{ user, setUser, loading,setLoading }}>
       {children}
