@@ -48,7 +48,7 @@ function Header() {
 
     const logoutUser = async () => {
       let data = await logout();
-      console.log(data);
+      // console.log(data);
       // console.log(data);
       if (data?.status == 200) {
         setUser(null);

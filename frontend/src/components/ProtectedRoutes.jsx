@@ -7,7 +7,7 @@ function ProtectedRoutes({comp}) {
   const { loading, user } = useContext(UserContext);
 
   const role = user?.role;
-  console.log(role)
+  // console.log(role)
 useEffect(() => {
   if (!loading && !user) {
     navigate("/login", { replace: true });

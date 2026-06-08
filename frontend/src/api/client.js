@@ -16,7 +16,7 @@ const refreshToken = async () => {
     await getMe();
   } catch (error) {
     // Refresh failed — user needs to log in again
-    console.warn("Token refresh failed:", error.message);
+    // console.warn("Token refresh failed:", error.message);
   } finally {
     isRefreshing = false;
   }

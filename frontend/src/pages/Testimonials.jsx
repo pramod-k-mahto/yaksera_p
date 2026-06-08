@@ -71,7 +71,7 @@ function Testimonials() {
 
   const getData = async () => {
     const data = await getTestimonials();
-    console.log(data.data);
+    // console.log(data.data);
   };
 
   useEffect(() => {

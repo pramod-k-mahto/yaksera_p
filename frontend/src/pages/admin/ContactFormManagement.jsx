@@ -146,7 +146,7 @@ function ContactFormManagement() {
 
       const res = await getContacts(`?${params.toString()}`);
 
-      console.log(res.data.inquiries)
+      // console.log(res.data.inquiries)
       setContacts(res.data.inquiries);
       // FIX: spread API pagination but force `page` from our request arg,
       //      in case the backend omits or mismatches the current page field.

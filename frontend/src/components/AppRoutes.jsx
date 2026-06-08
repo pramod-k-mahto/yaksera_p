@@ -50,7 +50,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 
 function AppRoutes() {
   const { loading } = useContext(UserContext);
-  console.log(loading)
+  // console.log(loading)
 
   // ✅ FIX: handle loading outside Routes
   if (loading) {

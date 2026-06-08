@@ -154,7 +154,7 @@ function CaseStudies() {
       try {
         setLoading(true);
         const res = await getAllCaseStudies();
-        console.log(res)
+        // console.log(res)
         setStudies(res?.data ?? []);
       } catch {
         setError("Failed to load case studies. Please try again later.");

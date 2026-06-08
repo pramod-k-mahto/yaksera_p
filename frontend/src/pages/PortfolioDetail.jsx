@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 function PortfolioDetail() {
   const location = useLocation();
-  console.log(location?.state)
+  // console.log(location?.state)
 
   const{title,description,tags,image,projectUrl,github}=location.state
   // Example static data (later you can replace with API)

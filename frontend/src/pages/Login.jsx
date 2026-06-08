@@ -22,7 +22,7 @@ function Login() {
     try {
       setLoading(true);
       let data = await login(formData);
-      console.log(data.data?.user?.role);
+      // console.log(data.data?.user?.role);
       // alert(data?.message);
       setUser(data?.data?.user);
       if (data?.data?.user?.role == "admin") {
