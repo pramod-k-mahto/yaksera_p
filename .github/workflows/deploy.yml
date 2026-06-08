@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy VPS
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -21,7 +21,23 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
 
           script: |
+            set -e
+
             cd /var/www/yaksera_p
+
+            echo "Pulling latest code..."
             git pull origin main
+
+            echo "Stopping containers..."
             docker compose down
-            docker compose up -d --build
+
+            echo "Cleaning old images & cache..."
+            docker system prune -af
+
+            echo "Rebuilding without cache..."
+            docker compose build --no-cache
+
+            echo "Starting containers..."
+            docker compose up -d
+
+            echo "Deployment completed successfully"
