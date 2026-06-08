@@ -43,9 +43,6 @@ function Header() {
       });
     }
   };
-
-
-
     const logoutUser = async () => {
       let data = await logout();
       // console.log(data);
