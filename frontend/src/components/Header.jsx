@@ -44,20 +44,6 @@ function Header() {
     }
   };
 
-  // const handleLogout = () => {
-  //   setUser(null);
-  //   // clear token if you store it
-  //   localStorage.removeItem("token");
-  //   navigate("/login");
-  // };
-
-  // const handleLogoutMobile = () => {
-  //   setUser(null);
-  //   localStorage.removeItem("token");
-  //   setIsOpen(false);
-  //   navigate("/login");
-  // };
-
 
 
     const logoutUser = async () => {

@@ -81,7 +81,7 @@ function AppRoutes() {
 
       {/* ADMIN ROUTES (PROTECTED) */}
       <Route
-        path="/admin/*"
+        path="/admin/"
         element={<ProtectedRoutes comp={<Dashboard />} />}
       >
         <Route index element={<LogoManagement />} />
