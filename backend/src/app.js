@@ -15,7 +15,6 @@ import { ZodError } from "zod";
 import ApiError from "./utils/ApiError.js";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
-
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
