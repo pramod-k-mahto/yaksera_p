@@ -27,12 +27,9 @@ function Header() {
     return () => (document.body.style.overflow = "");
   }, [isOpen]);
 
-  // ✅ FIXED SCROLL HANDLER (SAFE)
   const scrollToSection = (section) => {
     setIsOpen(false);
-
     sessionStorage.setItem("scrollTarget", section);
-
     if (location.pathname !== "/") {
       navigate("/");
     } else {
@@ -47,7 +44,7 @@ function Header() {
   return (
     <>
       {/* HEADER */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10  bg-[#0d275c]  backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0d275c] backdrop-blur-xl">
         <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-5 md:px-10">
 
           {/* LOGO */}
@@ -68,20 +65,31 @@ function Header() {
             ))}
           </nav>
 
-          {/* ADMIN */}
-          {/* <Link to="/admin" className="text-white/70 hover:text-white">
-            Admin
-          </Link> */}
+          {/* ✅ RIGHT SIDE — Login + Register + CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <div className="h-[18px] w-px bg-white/20" />
+            <Link
+              to="/login"
+              className="text-[14px] font-medium text-white/80 hover:text-white transition"
+            >
+              Log in
+            </Link>
+            <Link
+              to="/register"
+              className="text-[14px] font-semibold text-white border border-white/30 rounded-full px-4 py-1.5 hover:bg-white/10 transition"
+            >
+              Register
+            </Link>
+            <div className="h-[18px] w-px bg-white/20" />
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-[#e8132f] px-5 py-2.5 text-sm font-semibold text-white hover:scale-[1.02] transition"
+            >
+              Start Project →
+            </Link>
+          </div>
 
-          {/* CTA */}
-          <Link
-            to="/contact"
-            className="hidden md:inline-flex items-center gap-2 rounded-full bg-[#e8132f] px-5 py-2.5 text-sm font-semibold text-white hover:scale-[1.02] transition"
-          >
-            Start Project →
-          </Link>
-
-          {/* MOBILE */}
+          {/* MOBILE HAMBURGER */}
           <button
             onClick={() => setIsOpen(true)}
             className="md:hidden flex flex-col gap-[5px]"
@@ -129,6 +137,24 @@ function Header() {
                     {item.label}
                   </button>
                 ))}
+
+                {/* ✅ AUTH in mobile menu — below nav items, above CTA */}
+                <div className="border-t border-white/10 pt-4 mt-1 flex flex-col gap-3">
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="text-white/70 hover:text-white"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="text-white/70 hover:text-white"
+                  >
+                    Register
+                  </Link>
+                </div>
               </div>
 
               <div className="absolute bottom-0 w-full p-5 border-t border-white/10">
