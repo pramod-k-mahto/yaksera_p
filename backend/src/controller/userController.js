@@ -44,6 +44,7 @@ export const register = async (req, res, next) => {
       coverImage: uploadedCoverImage,
       emailVerifiedToken: token,
     });
+    
     userInfo = await userInfo.save();
 
     const verifyUrl = `${process.env.CLIENT_URL}/verifyEmail/${token}`;
