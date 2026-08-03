@@ -292,6 +292,12 @@ export default function Register() {
             </div>
           </form>
 
+
+
+
+
+
+
           {/* Footer link */}
           <p className="text-center text-white/30 text-xs mt-5">
             Already have an account?{" "}
