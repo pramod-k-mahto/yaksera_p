@@ -1,6 +1,18 @@
 import { getMe } from "../services/users";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://yaksera.onrender.com";
+const rawBaseUrl = import.meta.env.VITE_API_URL || "https://yaksera.onrender.com";
+
+// Guard against Mixed Content: if the app is served over HTTPS but the API base
+// is an http:// URL, the browser blocks every request ("Failed to fetch").
+// Upgrade to https so the request can actually go through. (An http page is
+// unaffected.) Fix the deployed VITE_API_URL to an https URL to avoid relying
+// on this fallback.
+const BASE_URL =
+  typeof window !== "undefined" &&
+  window.location.protocol === "https:" &&
+  rawBaseUrl.startsWith("http://")
+    ? rawBaseUrl.replace(/^http:\/\//, "https://")
+    : rawBaseUrl;
 
 let isRefreshing = false;
 

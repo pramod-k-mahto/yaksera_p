@@ -21,18 +21,19 @@ export const register = async (req, res, next) => {
       throw new ApiError(400, "User Already Exists");
     }
 
-    if (!req.files?.profile?.[0]) {
-      throw new ApiError(400, "Profile image is required");
-    }
-    if (!req.files?.coverImage?.[0]) {
-      throw new ApiError(400, "Cover image is required");
-    }
+    // Images are optional (the registration form marks them as optional).
+    // Only upload when provided, and fail only if an upload was attempted but failed.
+    let uploadedProfile = null;
+    let uploadedCoverImage = null;
 
-    const uploadedProfile = await uploadOnCloudinary(req.files.profile[0].path, false);
-    const uploadedCoverImage = await uploadOnCloudinary(req.files.coverImage[0].path, false);
-
-    if (!uploadedProfile) throw new ApiError(500, "Failed to upload profile image");
-    if (!uploadedCoverImage) throw new ApiError(500, "Failed to upload cover image");
+    if (req.files?.profile?.[0]) {
+      uploadedProfile = await uploadOnCloudinary(req.files.profile[0].path, false);
+      if (!uploadedProfile) throw new ApiError(500, "Failed to upload profile image");
+    }
+    if (req.files?.coverImage?.[0]) {
+      uploadedCoverImage = await uploadOnCloudinary(req.files.coverImage[0].path, false);
+      if (!uploadedCoverImage) throw new ApiError(500, "Failed to upload cover image");
+    }
 
     const token = jwt.sign({ email }, process.env.REFRESH_TOKEN_SECRET, {
       expiresIn: "1d",
@@ -151,6 +152,82 @@ export const logout = async (req, res, next) => {
       .clearCookie("refreshToken", cookieOptions)
       .status(200)
       .json(new ApiResponse(200, "Logged out successfully."));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.validatedData;
+
+    const user = await User.findOne({ email });
+
+    // Always respond the same way so we don't leak which emails are registered.
+    const genericResponse = () =>
+      res.status(200).json(
+        new ApiResponse(
+          200,
+          "If an account with that email exists, a password reset link has been sent.",
+        ),
+      );
+
+    if (!user) return genericResponse();
+
+    const token = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "15m",
+    });
+
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    await user.save();
+
+    const resetUrl = `${process.env.CLIENT_URL}/resetPassword/${token}`;
+    const html = `
+      <h1>Reset Your Password</h1>
+      <p>We received a request to reset your Yaksera account password.</p>
+      <p>Click the link below to choose a new password. This link expires in 15 minutes.</p>
+      <a href="${resetUrl}">Reset Password</a>
+      <p>If you didn't request this, you can safely ignore this email.</p>
+    `;
+
+    await sendMail(email, "Reset your Yaksera password", html);
+
+    return genericResponse();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.validatedData;
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+    } catch {
+      throw new ApiError(400, "Invalid or expired reset token.");
+    }
+
+    const user = await User.findOne({
+      _id: decoded.id,
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      throw new ApiError(400, "Invalid or expired reset token.");
+    }
+
+    user.password = password; // hashed by the pre-save hook
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    user.refreshToken = null; // invalidate existing sessions
+    await user.save();
+
+    res.status(200).json(new ApiResponse(200, "Password reset successfully. You can now log in."));
   } catch (error) {
     next(error);
   }

@@ -14,6 +14,8 @@ import CaseStudiesDetail from "../pages/CaseStudiesDetail.jsx";
 import ServicesDetail from "../pages/ServicesDetail.jsx";
 import VerifyEmail from "../pages/VerifyEmail.jsx";
 import Login from "../pages/Login";
+import ForgotPassword from "../pages/ForgotPassword.jsx";
+import ResetPassword from "../pages/ResetPassword.jsx";
 import Register from "../auth/Register.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 
@@ -67,6 +69,8 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/resetPassword/:token" element={<ResetPassword />} />
       <Route path="/register" element={<Register />} />
       <Route path="/hire" element={<Hire />} />
       <Route path="/contact" element={<Contact />} />

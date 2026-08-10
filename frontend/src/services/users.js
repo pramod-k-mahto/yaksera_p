@@ -34,3 +34,17 @@ export const getMe = async () => {
     method: "GET",
   });
 };
+
+export const forgotPassword = async (email) => {
+  return await apiClient("/api/v1/users/forgot-password", {
+    method: "POST",
+    body: { email },
+  });
+};
+
+export const resetPassword = async (token, password) => {
+  return await apiClient(`/api/v1/users/reset-password/${token}`, {
+    method: "POST",
+    body: { password },
+  });
+};

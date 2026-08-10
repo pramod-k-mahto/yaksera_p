@@ -19,7 +19,7 @@ function VerifyEmail() {
   return (
     <div className="p-10  text-green-500 w-96 m-auto bg-gray-100 flex justify-center flex-col items-center  my-10 ">
       <h1>{data.message}</h1>
-      <NavLink>Home </NavLink>
+      <NavLink to="/">Home </NavLink>
     </div>
   );
 }
