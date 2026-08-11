@@ -1,6 +1,6 @@
 import logo from "../assets/logo.png";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
-import { scroller } from "react-scroll";
+import { scrollToId } from "../utils/scroll";
 import { FaLinkedin } from "react-icons/fa6";
 import { AiFillTikTok } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
@@ -27,21 +27,11 @@ function Footer() {
   // ✅ ONLY SCROLL FUNCTION (for services)
   const scrollToSection = (section) => {
     if (location.pathname !== "/") {
+      // Defer the scroll to after Home mounts (handled by Home's effect).
+      sessionStorage.setItem("scrollTarget", section);
       navigate("/");
-
-      setTimeout(() => {
-        scroller.scrollTo(section, {
-          smooth: true,
-          duration: 500,
-          offset: -85,
-        });
-      }, 300);
     } else {
-      scroller.scrollTo(section, {
-        smooth: true,
-        duration: 500,
-        offset: -85,
-      });
+      scrollToId(section);
     }
   };
 

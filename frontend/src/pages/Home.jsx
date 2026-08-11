@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Element, scroller } from "react-scroll";
+import { Element } from "react-scroll";
+import { scrollToId } from "../utils/scroll";
 
 import FAQ from "./FAQ";
 import Call from "./Call";
@@ -18,21 +19,24 @@ import Demo from "./Demo";
 
 function Home() {
 
-  // ✅ FIX: restore scroll after navigation
+  // ✅ FIX: restore scroll after navigation, retrying until the section mounts
+  // (sections below the fold render their data asynchronously).
   useEffect(() => {
     const target = sessionStorage.getItem("scrollTarget");
+    if (!target) return;
 
-    if (target) {
-      setTimeout(() => {
-        scroller.scrollTo(target, {
-          smooth: true,
-          duration: 500,
-          offset: -85,
-        });
-
+    let attempts = 0;
+    const tryScroll = () => {
+      attempts += 1;
+      if (scrollToId(target) || attempts >= 20) {
         sessionStorage.removeItem("scrollTarget");
-      }, 200);
-    }
+        return;
+      }
+      setTimeout(tryScroll, 150);
+    };
+
+    const t = setTimeout(tryScroll, 150);
+    return () => clearTimeout(t);
   }, []);
 
   return (
@@ -53,23 +57,23 @@ function Home() {
           <Hero />
           <WhyYaksera />
 
-          <Element name="services" className="scroll-mt-24">
+          <Element id="services" name="services" className="scroll-mt-24">
             <Services />
           </Element>
         </div>
       </div>
 
-      <Element name="portfolio" className="scroll-mt-24">
+      <Element id="portfolio" name="portfolio" className="scroll-mt-24">
         <Portfolio />
       </Element>
             <Demo />
 
 
-      <Element name="blog" className="scroll-mt-24">
+      <Element id="blog" name="blog" className="scroll-mt-24">
         <Blog />
       </Element>
 
-      <Element name="testimonials" className="scroll-mt-24">
+      <Element id="testimonials" name="testimonials" className="scroll-mt-24">
         <Testimonials />
       </Element>
 
@@ -78,7 +82,7 @@ function Home() {
       <FAQ />
       <ExpertiseAreas />
 
-      <Element name="process" className="scroll-mt-24">
+      <Element id="process" name="process" className="scroll-mt-24">
         <Process />
       </Element>
 

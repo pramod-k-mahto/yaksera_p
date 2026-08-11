@@ -1,6 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../context/UserProvider.jsx";
 
 // Pages
 import Home from "../pages/Home";
@@ -51,18 +49,8 @@ import JobApplicationForm from "../components/JobApplicationForm.jsx";
 import ProtectedRoutes from "./ProtectedRoutes";
 
 function AppRoutes() {
-  const { loading } = useContext(UserContext);
-  // console.log(loading)
-
-  // ✅ FIX: handle loading outside Routes
-  if (loading) {
-    return (
-      <div className="min-h-screen text-black flex items-center justify-center text-lg font-semibold">
-        Loading...
-      </div>
-    );
-  }
-
+  // Note: we intentionally do NOT block the whole app on the auth probe here.
+  // Public pages must render immediately; only ProtectedRoutes waits on `loading`.
   return (
     <Routes>
       {/* PUBLIC ROUTES */}

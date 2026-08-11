@@ -34,23 +34,49 @@ const refreshToken = async () => {
   }
 };
 
+// Default per-request timeout so a hung/unreachable backend fails fast instead
+// of leaving the UI stuck on a loading state indefinitely.
+const REQUEST_TIMEOUT_MS = 15000;
+
 export const apiClient = async (
   endpoint,
-  { method = "GET", body, headers = {} } = {},
+  { method = "GET", body, headers = {}, timeout = REQUEST_TIMEOUT_MS } = {},
 ) => {
   const isFormData = body instanceof FormData;
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    method,
-    headers: {
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...headers,
-    },
-    credentials: "include",
-    body: isFormData ? body : body ? JSON.stringify(body) : undefined,
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
 
-  const data = await response.json();
+  let response;
+  try {
+    response = await fetch(`${BASE_URL}${endpoint}`, {
+      method,
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...headers,
+      },
+      credentials: "include",
+      signal: controller.signal,
+      body: isFormData ? body : body ? JSON.stringify(body) : undefined,
+    });
+  } catch (err) {
+    if (err.name === "AbortError") {
+      throw new Error("Request timed out. Please check your connection and try again.");
+    }
+    // Network error / server unreachable
+    throw new Error("Unable to reach the server. Please try again later.");
+  } finally {
+    clearTimeout(timer);
+  }
+
+  // Response may not be JSON (e.g. 502 HTML page, empty 204) — parse defensively.
+  let data = {};
+  try {
+    const text = await response.text();
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = {};
+  }
 
   if (response.status === 401) {
     await refreshToken();

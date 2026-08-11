@@ -210,16 +210,16 @@ export default function Demo() {
 
         {/* ROW 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.img {...fadeUp(0.05)} src={website} className="rounded-2xl" />
-          <motion.img {...fadeUp(0.1)} src={computer} className="rounded-2xl" />
+          <motion.img {...fadeUp(0.05)} src={website} loading="lazy" decoding="async" alt="Website demo" className="rounded-2xl" />
+          <motion.img {...fadeUp(0.1)} src={computer} loading="lazy" decoding="async" alt="Software demo" className="rounded-2xl" />
         </div>
 
         {/* ROW 2 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          <motion.img {...fadeUp(0.08)} src={ani} className="rounded-2xl" />
+          <motion.img {...fadeUp(0.08)} src={ani} loading="lazy" decoding="async" alt="Animation demo" className="rounded-2xl" />
 
-          <motion.img {...fadeUp(0.14)} src={box} className="rounded-2xl" />
+          <motion.img {...fadeUp(0.14)} src={box} loading="lazy" decoding="async" alt="Product demo" className="rounded-2xl" />
 
           <RealEstateCard />
 

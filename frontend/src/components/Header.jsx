@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { scroller } from "react-scroll";
+import { scrollToId } from "../utils/scroll";
 import logo from "../assets/logo.png";
 import { UserContext } from "../context/UserProvider";
 import { logout } from "../services/users";
@@ -32,15 +32,12 @@ function Header() {
 
   const scrollToSection = (section) => {
     setIsOpen(false);
-    sessionStorage.setItem("scrollTarget", section);
     if (location.pathname !== "/") {
+      // Defer the scroll to after Home mounts.
+      sessionStorage.setItem("scrollTarget", section);
       navigate("/");
     } else {
-      scroller.scrollTo(section, {
-        smooth: true,
-        duration: 500,
-        offset: -85,
-      });
+      scrollToId(section);
     }
   };
     const logoutUser = async () => {
