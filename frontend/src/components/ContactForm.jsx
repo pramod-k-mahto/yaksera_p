@@ -264,16 +264,14 @@ function ContactForm() {
       />
 
       <motion.div
-      className="w-[500px]"
+        className="w-full max-w-[500px] mx-auto p-6 sm:p-9"
         initial={{ opacity: 0, scale: 0.92 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
         style={{
-          
           background: "#fff",
           borderRadius: "28px",
-          padding: "36px 40px",
           boxShadow: "0 12px 40px rgba(0,0,0,0.09)",
         }}
       >
