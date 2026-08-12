@@ -1,6 +1,6 @@
 import { getMe } from "../services/users";
 
-const rawBaseUrl = import.meta.env.VITE_API_URL || "https://yaksera.com";
+const rawBaseUrl = import.meta.env.VITE_API_URL || "https://yaksera.com/";
 
 // Guard against Mixed Content: if the app is served over HTTPS but the API base
 // is an http:// URL, the browser blocks every request ("Failed to fetch").
