@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPortfolios, updatePortfolio } from "../../services/portfolio.js";
+import { getPortfolioById, updatePortfolio } from "../../services/portfolio.js";
 
 const CATEGORIES = ["Web Application", "Mobile App", "AI Automation", "Ui/Ux", "Web Development", "Full Stack"];
 const STATUSES   = ["draft", "published", "archived"];
@@ -42,8 +42,8 @@ export default function EditPortfolio() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await getPortfolios(id);
-        const p   = res.data;
+        const res = await getPortfolioById(id);
+        const p   = res?.data?.data || res?.data || {};
         setForm({
           title:      p.title      ?? "",
           slug:       p.slug       ?? "",

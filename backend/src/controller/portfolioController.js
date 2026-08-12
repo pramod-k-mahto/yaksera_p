@@ -46,7 +46,12 @@ export const getAllPortfolios = async (req, res) => {
 // ── READ ONE ──────────────────────────────────────────────────────────────────
 
 export const getSinglePortfolio = async (req, res) => {
-  const data = await Portfolio.findOne({ slug: req.params.slug });
+  const { slug } = req.params;
+  // Resolve by ObjectId (used by the admin edit page) or by slug (public URLs).
+  const isObjectId = /^[a-f\d]{24}$/i.test(slug);
+  const data = isObjectId
+    ? await Portfolio.findById(slug)
+    : await Portfolio.findOne({ slug });
   if (!data) throw new ApiError(404, "Portfolio not found");
   return res.status(200).json(new ApiResponse(200, "Portfolio fetched", data));
 };

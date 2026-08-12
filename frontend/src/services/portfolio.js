@@ -4,6 +4,11 @@ export const getPortfolios = async () => {
   return await apiClient("/api/v1/portfolios");
 };
 
+// Fetch one portfolio by ObjectId or slug (backend resolves both).
+export const getPortfolioById = async (idOrSlug) => {
+  return await apiClient(`/api/v1/portfolios/${idOrSlug}`);
+};
+
 export const createPortfolio = async (formData) => {
   return await apiClient("/api/v1/portfolios/create", {
     method: "POST",
