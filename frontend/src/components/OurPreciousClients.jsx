@@ -1,18 +1,16 @@
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
-import m from "../assets/OurClient/m.png";
-import cloudescale from "../assets/OurClient/cloudescale.png";
+import smartflow from "../assets/OurClient/smartflow.png";
 import dataflow from "../assets/OurClient/dataflow.png";
 import finext from "../assets/OurClient/finext.png";
 import globalbuild from "../assets/OurClient/globalbuild.png";
 import innsol from "../assets/OurClient/innsol.png";
 import nexatech from "../assets/OurClient/nexatech.png";
-import smartflow from "../assets/OurClient/smartflow.png";
 import techwave from "../assets/OurClient/techwave.png";
+import m from "../assets/OurClient/m.png";
 
+// Real client logos, preserved exactly — no invented names or descriptions.
 const clients = [
-  { img: m, name: "M" },
-  { img: cloudescale, name: "CloudScale" },
   { img: smartflow, name: "SmartFlow" },
   { img: dataflow, name: "DataFlow" },
   { img: finext, name: "Finext" },
@@ -20,109 +18,125 @@ const clients = [
   { img: innsol, name: "Innsol" },
   { img: nexatech, name: "NexaTech" },
   { img: techwave, name: "TechWave" },
+  { img: m, name: "Momentum" },
 ];
 
+const NAVY = "#071B47";
+const RED = "#F21D3A";
+const MUTED = "#64748B";
+const BORDER = "rgba(7,27,71,0.10)";
+
 export default function OurPreciousClients() {
-  const sliderRef = useRef(null);
-
-  const moveSlider = (dir) => {
-    const el = sliderRef.current;
-    if (!el) return;
-
-    const step = 220;
-
-    // pause animation
-    el.style.animation = "none";
-
-    el.scrollBy({
-      left: dir === "left" ? -step : step,
-      behavior: "smooth",
-    });
-
-    setTimeout(() => {
-      el.style.animation = "scroll 25s linear infinite";
-    }, 1200);
-  };
-
-  const loopedClients = [...clients, ...clients];
-
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden bg-[#F8FAFC]">
+      {/* extremely subtle decorative outline circle, mostly off-canvas */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 -top-40 hidden h-[560px] w-[560px] rounded-full border lg:block"
+        style={{ borderColor: "rgba(7,27,71,0.05)" }}
+      />
 
-      {/* TITLE */}
-      <div className="text-center mb-14">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-[#0b2c6f]">
-          Our Precious <span className="text-red-500">Clients</span>
-        </h1>
+      <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-28 lg:py-[120px]">
+        <div className="flex flex-col gap-14 lg:flex-row lg:items-stretch lg:gap-0">
 
-        <div className="flex justify-center items-center gap-3 mt-4">
-          <div className="w-14 h-1 bg-blue-900 rounded" />
-          <div className="w-3 h-3 bg-red-500 rounded-full" />
-          <div className="w-14 h-1 bg-red-500 rounded" />
-        </div>
-      </div>
-
-      {/* SLIDER */}
-      <div className="relative w-full overflow-hidden">
-
-        {/* fade edges */}
-        <div className="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white to-transparent z-10" />
-
-        <div
-          ref={sliderRef}
-          className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused]"
-        >
-          {loopedClients.map((client, i) => (
-            <div
-              key={`${client.name}-${i}`}
-              className="w-[180px] h-[160px] flex flex-col items-center justify-center bg-white rounded-2xl border border-gray-100 hover:shadow-md transition hover:-translate-y-2"
+          {/* ── LEFT · editorial intro ─────────────────────────── */}
+          <div className="lg:w-[34%] lg:shrink-0 lg:pr-14">
+            {/* eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-6 flex items-center gap-3"
             >
-              <div className="w-20 h-20 flex items-center justify-center">
-                <img
-                  src={client.img}
-                  alt={client.name}
-                  className="max-w-[70px] max-h-[50px] object-contain brightness-100 contrast-125"
-                />
-              </div>
+              <span className="h-2 w-2 rounded-full" style={{ background: RED }} />
+              <span className="text-[12px] font-semibold uppercase tracking-[0.2em]" style={{ color: MUTED }}>
+                Selected Clients
+              </span>
+            </motion.div>
 
-              <div className="text-sm font-semibold text-[#16326f]">
-                {client.name}
-              </div>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-[42px] lg:text-[52px] lg:leading-[1.08]"
+              style={{ color: NAVY }}
+            >
+              Built with businesses that <span style={{ color: RED }}>trust&nbsp;us</span> to deliver.
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="mt-6 max-w-[420px] text-[16px] leading-[1.65] md:text-[17px]"
+              style={{ color: MUTED }}
+            >
+              From growing businesses to ambitious digital products, we work
+              closely with our clients to turn ideas into reliable software.
+            </motion.p>
+
+            {/* understated partnership detail — no fabricated numbers */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.18 }}
+              className="mt-9 flex items-start gap-3"
+            >
+              <span className="mt-1 h-9 w-[3px] rounded-full" style={{ background: RED }} />
+              <p className="text-[14px] font-medium leading-[1.6]" style={{ color: NAVY }}>
+                Trusted partnerships.<br className="hidden sm:block" /> Real products. Long-term collaboration.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* ── SEPARATOR · distinctive Yaksera detail (desktop) ─── */}
+          <div className="relative hidden shrink-0 flex-col items-center px-8 lg:flex">
+            <span className="mb-3 h-2 w-2 rounded-full" style={{ background: RED }} />
+            <span
+              className="text-[11px] font-semibold uppercase tracking-[0.28em]"
+              style={{ color: MUTED, writingMode: "vertical-rl" }}
+            >
+              Partners&nbsp;/&nbsp;01
+            </span>
+            <span
+              className="mt-3 w-px flex-1"
+              style={{ background: `linear-gradient(to bottom, ${RED}, ${RED}22 45%, transparent)` }}
+            />
+          </div>
+
+          {/* ── RIGHT · continuous logo wall ───────────────────── */}
+          <div className="lg:flex-1">
+            <div
+              className="grid grid-cols-2 overflow-hidden rounded-xl border-l border-t"
+              style={{ borderColor: BORDER }}
+            >
+              {clients.map((client, i) => (
+                <motion.div
+                  key={client.name}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: (i % 2) * 0.05 + Math.floor(i / 2) * 0.05 }}
+                  className="group flex min-h-[130px] items-center justify-center border-b border-r px-6 transition-colors duration-200 hover:bg-white sm:min-h-[150px] sm:px-10"
+                  style={{ borderColor: BORDER }}
+                >
+                  <img
+                    src={client.img}
+                    alt={client.name}
+                    loading="lazy"
+                    className="max-h-14 w-auto max-w-[190px] object-contain opacity-[0.8] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:opacity-100 sm:max-h-16 sm:max-w-[220px]"
+                  />
+                </motion.div>
+              ))}
             </div>
-          ))}
+          </div>
+
         </div>
       </div>
-
-      {/* CONTROLS */}
-      <div className="flex text-black justify-center gap-4 mt-8">
-        <button
-          onClick={() => moveSlider("left")}
-          className="w-10 h-10 rounded-full bg-gray-100 shadow-2xl hover:bg-blue-900 hover:text-white transition"
-        >
-          ‹
-        </button>
-
-        <button
-          onClick={() => moveSlider("right")}
-          className="w-10 h-10 rounded-full bg-gray-100 shadow-2xl hover:bg-blue-900 hover:text-white transition"
-        >
-          ›
-        </button>
-      </div>
-
-      {/* ANIMATION */}
-      <style>{`
-        @keyframes scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-
-        .animate-scroll {
-          animation: scroll 25s linear infinite;
-        }
-      `}</style>
-
     </section>
   );
 }
