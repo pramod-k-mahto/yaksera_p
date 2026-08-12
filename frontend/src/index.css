@@ -2,8 +2,18 @@
 html {
   scroll-behavior: smooth;
 }
+/* Prevent any stray element from causing horizontal page scroll on mobile */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
 body {
   font-family: Inter, system-ui, sans-serif;
   background: #0b1220;
   color: white;
+}
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
 }

@@ -328,7 +328,7 @@ function ContactForm() {
                   value={form.countryCode}
                   onChange={handle}
                   className="h-12 pl-3 pr-8 text-sm border border-gray-200 rounded-xl bg-gray-50 font-semibold text-gray-700 outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all appearance-none cursor-pointer"
-                  style={{ minWidth: "110px" }}
+                  style={{ width: "112px" }}
                 >
                   {countryCodes.map((c) => (
                     <option key={`${c.code}-${c.country}`} value={c.code}>
@@ -343,7 +343,7 @@ function ContactForm() {
                 value={form.phone}
                 onChange={handle}
                 placeholder="Enter your contact number"
-                className={`flex-1 h-12 px-4 text-sm border rounded-xl outline-none focus:ring-2 focus:ring-red-100 transition-all
+                className={`flex-1 min-w-0 h-12 px-4 text-sm border rounded-xl outline-none focus:ring-2 focus:ring-red-100 transition-all
                   ${errors.phone ? "border-red-400" : "border-gray-200 focus:border-red-400"}`}
               />
             </div>
@@ -362,7 +362,7 @@ function ContactForm() {
                   value={form.currency}
                   onChange={handle}
                   className="h-12 pl-3 pr-8 text-sm border border-gray-200 rounded-xl bg-gray-50 font-semibold text-gray-700 outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all appearance-none cursor-pointer"
-                  style={{ minWidth: "110px" }}
+                  style={{ width: "112px" }}
                 >
                   {currencies.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -379,7 +379,7 @@ function ContactForm() {
                 value={formatNumber(form.projectBudget)}
                 onChange={handleBudget}
                 placeholder={`Enter amount in ${selectedCurrency.code}`}
-                className={`flex-1 h-12 px-4 text-sm border rounded-xl outline-none focus:ring-2 focus:ring-red-100 transition-all
+                className={`flex-1 min-w-0 h-12 px-4 text-sm border rounded-xl outline-none focus:ring-2 focus:ring-red-100 transition-all
                   ${errors.projectBudget ? "border-red-400" : "border-gray-200 focus:border-red-400"}`}
               />
             </div>
