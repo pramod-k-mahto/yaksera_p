@@ -18,7 +18,7 @@ function PortfolioDetail() {
   // };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white px-6 py-12">
+    <div className="min-h-screen bg-slate-950 text-white px-4 sm:px-6 py-8 md:py-12">
       <div className="max-w-5xl mx-auto">
         
         {/* Title */}
@@ -35,7 +35,7 @@ function PortfolioDetail() {
           <img
             src={image}
             alt="project"
-            className="w-full h-[400px] object-cover"
+            className="w-full h-52 sm:h-72 md:h-96 lg:h-[400px] object-cover"
           />
         </div>
 
