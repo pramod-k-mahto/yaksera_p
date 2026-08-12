@@ -93,9 +93,9 @@ export const login = async (req, res, next) => {
     }
 
     // Fix: block login until email is verified
-    if (!user.emailVerified) {
-      throw new ApiError(403, "Please verify your email before logging in.");
-    }
+    // if (!user.emailVerified) {
+    //   throw new ApiError(403, "Please verify your email before logging in.");
+    // }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
     if (!isPasswordValid) {
