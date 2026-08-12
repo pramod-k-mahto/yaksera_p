@@ -49,7 +49,7 @@ function Blog() {
           blogs.map((blog) => (
             <div
               key={blog._id}
-              onClick={() => navigate(`/blogDetail/${blog._id}`, { state: blog })}
+              onClick={() => navigate(`/blogDetail/${blog.slug || blog._id}`, { state: blog })}
               className="cursor-pointer bg-white border rounded-2xl overflow-hidden hover:shadow-xl transition"
             >
               <img

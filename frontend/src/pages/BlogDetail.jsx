@@ -16,7 +16,7 @@ const formatDate = (dateStr) => {
 const looksLikeHtml = (s) => /<\/?[a-z][\s\S]*>/i.test(s || "");
 
 function BlogDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); // ✅ added error state
@@ -24,7 +24,8 @@ function BlogDetail() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await getBlogById(id);
+        // Backend resolves both a slug and a legacy ObjectId here.
+        const res = await getBlogById(slug);
         const data = res?.data?.data || res?.data;
         setBlog(data);
       } catch (err) {
@@ -36,7 +37,7 @@ function BlogDetail() {
     };
 
     fetchBlog();
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return <div className="py-20 text-center">Loading blog...</div>;

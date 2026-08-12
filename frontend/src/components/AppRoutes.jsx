@@ -66,7 +66,7 @@ function AppRoutes() {
 
       <Route path="/caseStudies" element={<CaseStudies />} />
       <Route path="/caseStudiesDetail/:id" element={<CaseStudiesDetail />} />
-      <Route path="/blogDetail/:id" element={<BlogDetail />} />
+      <Route path="/blogDetail/:slug" element={<BlogDetail />} />
       <Route path="/portfolioDetail" element={<PortfolioDetail />} />
       <Route path="/servicesDetail/:id" element={<ServicesDetail />} />
       <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
