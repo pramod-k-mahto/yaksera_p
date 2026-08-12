@@ -11,6 +11,10 @@ const formatDate = (dateStr) => {
   return isNaN(d.getTime()) ? "Invalid date" : d.toDateString();
 };
 
+// Newer posts store rich HTML; older posts are plain text. Detect which so we
+// can render HTML safely and keep legacy line breaks intact.
+const looksLikeHtml = (s) => /<\/?[a-z][\s\S]*>/i.test(s || "");
+
 function BlogDetail() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
@@ -48,8 +52,20 @@ function BlogDetail() {
   }
 
   return (
-    <section className="px-6 md:px-12 lg:px-20 py-16 bg-white">
-      <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-12 max-w-7xl mx-auto">
+    <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-10 md:py-16 bg-white">
+      {/* Styling for rich-text blog content rendered from HTML */}
+      <style>{`
+        .blog-content h2 { font-size: 1.75rem; font-weight: 800; color: #0d1f4e; margin: 1.5rem 0 0.75rem; }
+        .blog-content h3 { font-size: 1.35rem; font-weight: 700; color: #0d1f4e; margin: 1.25rem 0 0.5rem; }
+        .blog-content p { margin: 0.75rem 0; }
+        .blog-content ul { list-style: disc; padding-left: 1.5rem; margin: 0.75rem 0; }
+        .blog-content ol { list-style: decimal; padding-left: 1.5rem; margin: 0.75rem 0; }
+        .blog-content li { margin: 0.25rem 0; }
+        .blog-content a { color: #e8192c; text-decoration: underline; }
+        .blog-content blockquote { border-left: 4px solid #e8192c; padding-left: 1rem; color: #475569; font-style: italic; margin: 1rem 0; }
+        .blog-content img { max-width: 100%; border-radius: 0.5rem; margin: 1rem 0; }
+      `}</style>
+      <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 lg:gap-12 max-w-7xl mx-auto">
 
         {/* LEFT */}
         <motion.div
@@ -67,7 +83,7 @@ function BlogDetail() {
           )}
 
           {/* TITLE */}
-          <h1 className="text-4xl md:text-5xl font-black text-[#0d1f4e]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#0d1f4e] leading-tight break-words">
             {blog.title}
           </h1>
 
@@ -98,45 +114,32 @@ function BlogDetail() {
             <img
               src={blog.coverImage}
               alt={blog.title}
-              className="w-full h-[400px] object-cover rounded-xl"
+              className="w-full h-52 sm:h-72 md:h-96 lg:h-[400px] object-cover rounded-xl"
             />
           )}
 
           {/* EXCERPT */}
           {blog.excerpt && (
-            <p className="text-gray-600 text-lg leading-8">{blog.excerpt}</p>
+            <p className="text-gray-600 text-base sm:text-lg leading-7 sm:leading-8">{blog.excerpt}</p>
           )}
 
           {/* CONTENT */}
           {blog.content && (
-            <div className="text-gray-700 leading-8 whitespace-pre-line">
-              {blog.content}
-            </div>
+            looksLikeHtml(blog.content) ? (
+              <div
+                className="blog-content text-gray-700 leading-8"
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+              />
+            ) : (
+              <div className="text-gray-700 leading-8 whitespace-pre-line">
+                {blog.content}
+              </div>
+            )
           )}
 
-          {/* SEO SECTION — ✅ only renders when seo data exists */}
-          {blog.seo && (
-            <div className="mt-10 p-5 border rounded-xl text-black">
-              {/* <h3 className="font-bold text-[#0d1f4e] mb-3">SEO Info</h3> */}
-
-              {blog.seo.metaTitle && (
-                <p><b>Meta Title:</b> {blog.seo.metaTitle}</p>
-              )}
-              {blog.seo.metaDescription && (
-                <p><b>Description:</b> {blog.seo.metaDescription}</p>
-              )}
-
-              {blog.seo.keywords?.length > 0 && (
-                <div className="flex gap-2 flex-wrap mt-2">
-                  {blog.seo.keywords.map((k) => (
-                    <span key={k} className="text-xs bg-white border px-2 py-1 rounded"> {/* ✅ use value as key */}
-                      {k}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          {/* SEO meta (metaTitle / metaDescription / keywords) is intentionally
+              NOT rendered on the page — it belongs in <head> tags, not visible
+              body content. */}
 
         </motion.div>
 

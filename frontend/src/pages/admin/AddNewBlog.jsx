@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef } from "react";
 import { createBlog } from "../../services/blog";
+import RichTextEditor from "../../components/RichTextEditor";
+
+// Strip HTML tags to measure the real text length of rich-text content.
+const stripHtml = (html) => (html || "").replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").trim();
 
 // ── validation ────────────────────────────────────────────────────────────────
 const validate = (data) => {
@@ -21,7 +25,7 @@ const validate = (data) => {
   else if (data.excerpt.length > 300)
     errors.excerpt = "Excerpt must be at most 300 characters.";
 
-  if (!data.content || data.content.length < 20)
+  if (!data.content || stripHtml(data.content).length < 20)
     errors.content = "Content must be at least 20 characters.";
 
   // coverImage is now a File object, not a URL
@@ -441,8 +445,17 @@ console.log(formData)
               <Textarea name="excerpt" rows={3} value={form.excerpt} onChange={handleChange} onBlur={handleBlur} error={hasErr("excerpt")} placeholder="A short summary shown in post previews…" maxLength={300} />
             </Field>
 
-            <Field label="Content" required error={hasErr("content") && errors.content} hint={`${charCounts.content} characters (min 20)`}>
-              <Textarea name="content" rows={10} value={form.content} onChange={handleChange} onBlur={handleBlur} error={hasErr("content")} placeholder="Write your full blog post here. Markdown is supported…" />
+            <Field label="Content" required error={hasErr("content") && errors.content} hint={`${charCounts.content} characters of text (min 20)`}>
+              <RichTextEditor
+                value={form.content}
+                error={hasErr("content")}
+                placeholder="Write your full blog post here. Use the toolbar to format…"
+                onChange={(html) => {
+                  setForm((prev) => ({ ...prev, content: html }));
+                  setCharCounts((prev) => ({ ...prev, content: stripHtml(html).length }));
+                  setErrors((prev) => { const c = { ...prev }; delete c.content; return c; });
+                }}
+              />
             </Field>
           </div>
 

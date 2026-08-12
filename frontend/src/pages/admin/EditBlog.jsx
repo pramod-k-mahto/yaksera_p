@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getBlogById, updateBlog } from "../../services/blog";
+import RichTextEditor from "../../components/RichTextEditor";
+
+// Strip HTML tags to measure the real text length of rich-text content.
+const stripHtml = (html) => (html || "").replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").trim();
 
 // ── helpers (same as AddNewBlog) ──────────────────────────────────────────────
 const slugify = (str) =>
@@ -21,7 +25,7 @@ const validate = (data) => {
   if (!data.slug  || data.slug.length  < 3)   errors.slug     = "Slug must be at least 3 characters.";
   if (!data.category || data.category.length < 2) errors.category = "Category is required.";
   if (!data.excerpt || data.excerpt.length < 10)  errors.excerpt  = "Excerpt must be at least 10 characters.";
-  if (!data.content || data.content.length < 20)  errors.content  = "Content must be at least 20 characters.";
+  if (!data.content || stripHtml(data.content).length < 20)  errors.content  = "Content must be at least 20 characters.";
   if (!data.author  || data.author.length  < 2)   errors.author   = "Author is required.";
   if (data.seo?.metaDescription?.length > 160)    errors.seoMetaDescription = "Meta description should be under 160 characters.";
   return errors;
@@ -188,7 +192,7 @@ export default function EditBlog() {
             keywords: Array.isArray(b.seo?.keywords) ? b.seo.keywords.join(", ") : "",
           },
         });
-        setCharCounts({ excerpt: b.excerpt?.length ?? 0, content: b.content?.length ?? 0 });
+        setCharCounts({ excerpt: b.excerpt?.length ?? 0, content: stripHtml(b.content).length });
         // show existing cover as preview (string URL, not a File)
         if (b.coverImage) setCoverPreview(b.coverImage);
       } catch {
@@ -374,8 +378,17 @@ export default function EditBlog() {
               <Textarea name="excerpt" rows={3} value={form.excerpt} onChange={handleChange} onBlur={handleBlur} error={hasErr("excerpt")} placeholder="A short summary…" maxLength={300} />
             </Field>
 
-            <Field label="Content" required error={hasErr("content") && errors.content} hint={`${charCounts.content} characters (min 20)`}>
-              <Textarea name="content" rows={10} value={form.content} onChange={handleChange} onBlur={handleBlur} error={hasErr("content")} placeholder="Write your full blog post here. Markdown is supported…" />
+            <Field label="Content" required error={hasErr("content") && errors.content} hint={`${charCounts.content} characters of text (min 20)`}>
+              <RichTextEditor
+                value={form.content}
+                error={hasErr("content")}
+                placeholder="Write your full blog post here. Use the toolbar to format…"
+                onChange={(html) => {
+                  setForm((prev) => ({ ...prev, content: html }));
+                  setCharCounts((prev) => ({ ...prev, content: stripHtml(html).length }));
+                  setErrors((prev) => { const c = { ...prev }; delete c.content; return c; });
+                }}
+              />
             </Field>
           </div>
 
