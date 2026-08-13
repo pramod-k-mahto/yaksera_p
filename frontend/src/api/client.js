@@ -84,7 +84,16 @@ export const apiClient = async (
   }
 
   if (!response.ok) {
-    throw new Error(data.message || "Something went wrong");
+    // Surface per-field validation details when the server provides them,
+    // instead of a bare "Validation failed".
+    const details = Array.isArray(data.errors)
+      ? data.errors
+          .map((e) => (e?.field ? `${e.field}: ${e.message}` : e?.message))
+          .filter(Boolean)
+          .join(" · ")
+      : "";
+    const base = data.message || "Something went wrong";
+    throw new Error(details ? `${base} — ${details}` : base);
   }
 
   return data;

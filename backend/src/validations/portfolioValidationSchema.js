@@ -25,7 +25,14 @@ const portfolioValidationSchema = z.object({
   image: z.string().optional(),
   gallery: z.array(z.string()).optional(),
 
-  tags: z.array(z.string()).optional(),
+  // multipart form-data sends a single tag as a string and multiple as an
+  // array — normalise both (and empty) to an array of strings.
+  tags: z
+    .preprocess(
+      (v) => (v === undefined || v === null || v === "" ? [] : Array.isArray(v) ? v : [v]),
+      z.array(z.string()),
+    )
+    .optional(),
 
   status: z.enum(["draft", "published", "archived"]).optional(),
 
