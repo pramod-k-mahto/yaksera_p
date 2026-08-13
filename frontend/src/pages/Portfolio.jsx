@@ -209,7 +209,7 @@ function Portfolio() {
                 </p>
 
                 <button className="text-sm font-semibold text-black flex items-center gap-2">
-                  View Case Study
+                  View Details
                   <span className="group-hover:translate-x-1 transition">
                     →
                   </span>
