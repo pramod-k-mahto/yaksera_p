@@ -30,12 +30,12 @@ function PortfolioDetail() {
           Project ID: {id}
         </p> */}
 
-        {/* Image */}
-        <div className="rounded-xl overflow-hidden mb-8 border border-slate-800">
+        {/* Image — full image, no cropping, responsive */}
+        <div className="rounded-xl overflow-hidden mb-8 border border-slate-800 bg-slate-900 flex justify-center">
           <img
             src={image}
-            alt="project"
-            className="w-full h-52 sm:h-72 md:h-96 lg:h-[400px] object-cover"
+            alt={title || "project"}
+            className="w-full h-auto max-h-[75vh] object-contain"
           />
         </div>
 
