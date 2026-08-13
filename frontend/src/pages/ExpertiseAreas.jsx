@@ -79,7 +79,7 @@ const industries = [
 
 function ExpertiseAreas() {
   return (
-    <section className="w-full bg-white px-6 py-16 md:px-12 lg:px-20 font-sans">
+    <section className="w-full max-w-7xl mx-auto bg-white px-6 py-16 md:px-12 lg:px-20 font-sans">
 
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-14">

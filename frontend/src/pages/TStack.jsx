@@ -56,7 +56,7 @@ export default function TStack() {
   const loop = [...techs, ...techs];
 
   return (
-    <section className="w-full  bg-white overflow-hidden font-sans">
+    <section className="w-full max-w-7xl mx-auto bg-white overflow-hidden font-sans px-6 md:px-12 lg:px-20 py-16">
 
       {/* TITLE */}
       <div className="text-center mb-10">
