@@ -8,7 +8,7 @@ export default function GlobalDelivery() {
   useEffect(() => setVisible(true), []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 font-sans">
+    <div className="flex items-center justify-center py-16 px-4 font-sans">
       <div className="w-full bg-[#111c3b] max-w-5xl rounded-2xl overflow-hidden relative">
 
         {/* Glow */}

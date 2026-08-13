@@ -41,7 +41,7 @@ export default function FAQ() {
   const toggle = (i) => setOpen(open === i ? null : i);
 
   return (
-    <section className="min-h-screen bg-[#f9f9f7] flex flex-col items-center justify-center px-4 py-6 sm:py-14 font-sans">
+    <section className="bg-[#f9f9f7] flex flex-col items-center justify-center px-4 py-14 sm:py-20 font-sans">
 
       {/* Header */}
       <div className="text-center mb-10 sm:mb-14">

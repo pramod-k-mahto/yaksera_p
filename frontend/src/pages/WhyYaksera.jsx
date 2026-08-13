@@ -31,7 +31,7 @@ function WhyYaksera() {
       ref={ref}
       className="bg-white flex items-center justify-center px-6 md:px-12 lg:px-20 py-20"
     >
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
         {/* LEFT */}
         <motion.div

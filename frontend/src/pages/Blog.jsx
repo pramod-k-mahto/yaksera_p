@@ -35,7 +35,7 @@ function Blog() {
   }
 
   return (
-    <div className="min-h-screen py-20 px-6 md:px-12 lg:px-20 bg-white">
+    <div className="max-w-7xl mx-auto py-20 px-6 md:px-12 lg:px-20 bg-white">
       <h2 className="text-3xl font-black text-[#e8192c] text-center mb-10">
         Blog
       </h2>

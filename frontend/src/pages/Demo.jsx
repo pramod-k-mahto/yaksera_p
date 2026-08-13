@@ -179,7 +179,7 @@ function RealEstateCard() {
 ══════════════════════════════════════════ */
 export default function Demo() {
   return (
-    <section className="bg-white px-6 md:px-12 lg:px-20 py-20">
+    <section className="bg-white max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-20">
 
       {/* HEADER */}
       <motion.div
