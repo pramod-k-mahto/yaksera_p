@@ -4,7 +4,7 @@ import AppRoutes from "./components/AppRoutes";
 import ScrollToTop from "./components/ScrollToTop";
 function App() {
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full max-w-full overflow-x-hidden">
       <>
         <ScrollToTop />
         <Header />
