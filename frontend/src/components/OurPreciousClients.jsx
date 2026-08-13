@@ -36,8 +36,8 @@ export default function OurPreciousClients() {
         style={{ borderColor: "rgba(7,27,71,0.05)" }}
       />
 
-      <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-28 lg:py-[120px]">
-        <div className="flex flex-col gap-14 lg:flex-row lg:items-stretch lg:gap-0">
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 md:py-20">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-0">
 
           {/* ── LEFT · editorial intro ─────────────────────────── */}
           <div className="lg:w-[34%] lg:shrink-0 lg:pr-14">
@@ -121,7 +121,7 @@ export default function OurPreciousClients() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: (i % 2) * 0.05 + Math.floor(i / 2) * 0.05 }}
-                  className="group flex min-h-[130px] items-center justify-center border-b border-r px-6 transition-colors duration-200 hover:bg-white sm:min-h-[150px] sm:px-10"
+                  className="group flex min-h-[96px] items-center justify-center border-b border-r px-6 transition-colors duration-200 hover:bg-white sm:min-h-[116px] sm:px-10"
                   style={{ borderColor: BORDER }}
                 >
                   <img
