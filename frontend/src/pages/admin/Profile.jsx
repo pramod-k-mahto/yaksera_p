@@ -14,7 +14,7 @@ function Profile() {
     if (data?.status == 200) {
       setUser(null);
       alert(data?.message);
-      return navigate("/login"); // Redirect to admin dashboard after successful login
+      return navigate("/login"); // Redirect to admin dashboard after successful logins
     }
   };
 
