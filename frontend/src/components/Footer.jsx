@@ -109,18 +109,42 @@ function Footer() {
             </div>
 
             <div className="flex gap-3">
-              <NavLink   target="_blank"  to='https://www.facebook.com/share/16qwURL1if/?mibextid=wwXIfr' >
+              <a
+                href="https://www.facebook.com/share/16qwURL1if/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="text-slate-300 hover:text-white transition"
+              >
                 <FaFacebookF size={20} />
-              </NavLink>
-              <NavLink  target="_blank" to='https://www.linkedin.com/in/yaksera' >
+              </a>
+              <a
+                href="https://www.linkedin.com/in/yaksera"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="text-slate-300 hover:text-white transition"
+              >
                 <FaLinkedin size={20} />
-              </NavLink>
-              <NavLink  target="_blank"  to="https://www.tiktok.com/@yaksera?_r=1&_t=ZS-96T4DlBHdzT"  >
+              </a>
+              <a
+                href="https://www.tiktok.com/@yaksera?_r=1&_t=ZS-96T4DlBHdzT"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="TikTok"
+                className="text-slate-300 hover:text-white transition"
+              >
                 <AiFillTikTok size={20} />
-              </NavLink>
-              <NavLink  target="_blank" to='https://www.instagram.com/yakserasolutions?igsh=b254M3NsdHpvcm5r&utm_source=qr'  >
+              </a>
+              <a
+                href="https://www.instagram.com/yakserasolutions?igsh=b254M3NsdHpvcm5r&utm_source=qr"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="text-slate-300 hover:text-white transition"
+              >
                 <GrInstagram size={20} />
-              </NavLink>
+              </a>
             </div>
           </div>
         </div>
