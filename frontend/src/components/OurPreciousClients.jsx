@@ -128,7 +128,7 @@ export default function OurPreciousClients() {
                     src={client.img}
                     alt={client.name}
                     loading="lazy"
-                    className="max-h-14 w-auto max-w-[190px] object-contain transition-transform duration-200 group-hover:-translate-y-0.5 sm:max-h-16 sm:max-w-[220px]"
+                    className="max-h-12 w-auto max-w-[150px] object-contain transition-transform duration-200 group-hover:-translate-y-0.5 sm:max-h-14 sm:max-w-[170px]"
                   />
                 </motion.div>
               ))}
