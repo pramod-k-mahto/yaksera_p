@@ -272,7 +272,7 @@ export default function YakseraIntro() {
           //    -> handled by the gap before the BOOM below.
 
           // 6) BOOM — surrounding photos explode outward; main stays put.
-          const boomAt = zoomEnd + 0.9; // ~5.65s
+          const boomAt = zoomEnd + 0.45; // brief hold before the boom
           explodeTargets(1, false).forEach((p) => {
             tl.to(
               p.el,
@@ -297,30 +297,29 @@ export default function YakseraIntro() {
           );
 
           const boomEnd = boomAt + 1.1; // ~6.75s
-          const holdEnd = boomEnd + 0.7; // ~7.45s — hold the exploded frame
+          const holdEnd = boomEnd + 0.2; // brief beat — then exit quickly
 
-          // 7) EXIT — surrounding photos keep moving out and fade.
+          // 7) EXIT — surrounding photos keep moving out and fade (quick).
           explodeTargets(1.7, true).forEach((p) => {
             tl.to(
               p.el,
-              { x: p.x, y: p.y, autoAlpha: 0, duration: 1.0, ease: "power2.in" },
+              { x: p.x, y: p.y, autoAlpha: 0, duration: 0.55, ease: "power2.in" },
               holdEnd
             );
           });
 
-          // 8) Center photo lingers, then we pass "through" it.
+          // 8) Center photo exits quickly — no long linger.
           tl.to(
             cards[MAIN_INDEX],
-            { scale: cfg.mainBoom * 1.08, autoAlpha: 0, x: 0, y: 0, duration: 0.9, ease: "power2.in" },
-            holdEnd + 0.2
+            { scale: cfg.mainBoom * 1.08, autoAlpha: 0, x: 0, y: 0, duration: 0.45, ease: "power2.in" },
+            holdEnd + 0.05
           );
 
-          // 9) REVEAL — fade the overlay out slightly before the photo is gone
-          //    (~350ms overlap) so the existing homepage bleeds through.
+          // 9) REVEAL — fade the overlay out so the existing homepage bleeds through.
           tl.to(
             rootRef.current,
-            { autoAlpha: 0, duration: 0.6, ease: "power2.inOut" },
-            holdEnd + 0.55
+            { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" },
+            holdEnd + 0.2
           );
         };
 

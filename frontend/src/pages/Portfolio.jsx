@@ -121,9 +121,9 @@ function Portfolio() {
       >
         <motion.div
           // variants={fadeUp}
-          className="space-y-3 max-w-xl"
+          className="space-y-4 max-w-xl"
         >
-          <span className="text-[#e8192c] border border-[#e8192c]/30 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full">
+          <span className="inline-block text-[#e8192c] border border-[#e8192c]/30 text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full">
             Our Work
           </span>
 
