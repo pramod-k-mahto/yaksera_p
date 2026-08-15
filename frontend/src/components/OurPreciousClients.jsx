@@ -121,14 +121,14 @@ export default function OurPreciousClients() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: (i % 2) * 0.05 + Math.floor(i / 2) * 0.05 }}
-                  className="group flex min-h-[96px] items-center justify-center border-b border-r px-6 transition-colors duration-200 hover:bg-white sm:min-h-[116px] sm:px-10"
+                  className="group flex min-h-[96px] items-center justify-center border-b border-r bg-white px-6 py-6 transition-colors duration-200 sm:min-h-[116px] sm:px-10"
                   style={{ borderColor: BORDER }}
                 >
                   <img
                     src={client.img}
                     alt={client.name}
                     loading="lazy"
-                    className="max-h-14 w-auto max-w-[190px] object-contain opacity-[0.8] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:opacity-100 sm:max-h-16 sm:max-w-[220px]"
+                    className="max-h-14 w-auto max-w-[190px] object-contain transition-transform duration-200 group-hover:-translate-y-0.5 sm:max-h-16 sm:max-w-[220px]"
                   />
                 </motion.div>
               ))}
