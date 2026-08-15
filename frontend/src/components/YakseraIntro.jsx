@@ -65,6 +65,10 @@ const stackVariation = [
 // (editorial feel — the positions themselves stay mathematically balanced).
 const explodeRot = [-8, 6, -5, 9, -7, 5, -9, 7, -6];
 
+// Number of vertical navy bars that make up the backdrop and then slide open
+// (alternating up/down) to reveal the homepage as the final transition.
+const NBARS = 8;
+
 export default function YakseraIntro() {
   // Decide up-front (before first paint) whether the intro should run at all.
   const [shouldPlay] = useState(() => {
@@ -83,6 +87,8 @@ export default function YakseraIntro() {
   const logoRef = useRef(null);
   const stageRef = useRef(null);
   const cardRefs = useRef([]);
+  const barsWrapRef = useRef(null);
+  const barRefs = useRef([]);
 
   const finish = () => {
     try {
@@ -148,7 +154,17 @@ export default function YakseraIntro() {
             { autoAlpha: 1, scale: 1, duration: 0.4, ease: "power2.out" }
           )
             .to(logoRef.current, { autoAlpha: 0, duration: 0.35 }, "+=0.25")
-            .to(rootRef.current, { autoAlpha: 0, duration: 0.4 }, "-=0.1");
+            // Bars slide open (quick) to reveal the homepage.
+            .to(
+              barRefs.current,
+              {
+                yPercent: (i) => (i % 2 === 0 ? -100 : 100),
+                duration: 0.5,
+                ease: "power3.inOut",
+                stagger: { each: 0.03, from: "center" },
+              },
+              "-=0.05"
+            );
         }, rootRef);
         return;
       }
@@ -315,11 +331,18 @@ export default function YakseraIntro() {
             holdEnd + 0.05
           );
 
-          // 9) REVEAL — fade the overlay out so the existing homepage bleeds through.
+          // 9) OPEN-BAR REVEAL — the navy backdrop is built from vertical bars;
+          //    they slide open (alternating up / down, from the center outward)
+          //    to unveil the existing homepage underneath.
           tl.to(
-            rootRef.current,
-            { autoAlpha: 0, duration: 0.4, ease: "power2.inOut" },
-            holdEnd + 0.2
+            barRefs.current,
+            {
+              yPercent: (i) => (i % 2 === 0 ? -100 : 100),
+              duration: 0.75,
+              ease: "power4.inOut",
+              stagger: { each: 0.05, from: "center" },
+            },
+            holdEnd + 0.4
           );
         };
 
@@ -358,9 +381,36 @@ export default function YakseraIntro() {
         height: "100dvh",
         overflow: "hidden",
         zIndex: 9999,
-        background: NAVY,
+        background: "transparent",
       }}
     >
+      {/* OPEN-BAR BACKDROP — vertical navy bars that cover the homepage during
+          the intro, then slide open (alternating up / down) as the final
+          reveal. They form the solid navy background for the whole sequence. */}
+      <div
+        ref={barsWrapRef}
+        style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }}
+      >
+        {Array.from({ length: NBARS }).map((_, i) => (
+          <div
+            key={i}
+            ref={(el) => {
+              barRefs.current[i] = el;
+            }}
+            style={{
+              position: "absolute",
+              top: "-2px",
+              height: "calc(100% + 4px)",
+              // +1px width overlap hides sub-pixel seams between adjacent bars.
+              width: `calc(100% / ${NBARS} + 1px)`,
+              left: `calc(${i} * 100% / ${NBARS})`,
+              background: NAVY,
+              willChange: "transform",
+            }}
+          />
+        ))}
+      </div>
+
       {/* Yaksera logo — the real asset, never cropped. Hidden from the very
           first frame (opacity 0 + visibility hidden) so it can't flash before
           GSAP takes over; GSAP owns the centering via xPercent/yPercent. */}
@@ -388,7 +438,7 @@ export default function YakseraIntro() {
       {/* The photo stage — every card is center-anchored. */}
       <div
         ref={stageRef}
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        style={{ position: "absolute", inset: 0, zIndex: 5, pointerEvents: "none" }}
       >
         {introImages.map((img, i) => (
           <div
