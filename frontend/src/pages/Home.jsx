@@ -16,6 +16,7 @@ import Hero from "../components/Hero";
 import RotateLeft from "../components/RotateLeft";
 import WhyYaksera from "./WhyYaksera";
 import Demo from "./Demo";
+import YakseraIntro from "../components/YakseraIntro";
 
 function Home() {
 
@@ -41,6 +42,11 @@ function Home() {
 
   return (
     <div className="bg-white">
+
+      {/* Premium fullscreen entrance animation — overlays this page
+          temporarily, then reveals the existing homepage underneath.
+          The homepage below renders immediately (not gated on the intro). */}
+      <YakseraIntro />
 
       {/* HERO */}
       <div className="relative isolate overflow-hidden">
